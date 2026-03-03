@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0B0B0D;
+  --color-background-secondary: #121216;
+  --color-background-card: #16161B;
+  --color-background-hover: #1C1C22;
+
+  --color-text: #F5F5F7;
+  --color-text-secondary: #A1A1AA;
+  --color-text-muted: #6B6B73;
+
+  --color-accent-gold: #C6A75E;
+  --color-accent-gold-hover: #D8B76A;
+
+  --color-border: #1F1F25;
+  --color-system-success: #4A7C59;
+  --color-system-error: #D04242;
+  --color-urgency-amber: #D4A03C;
+
+  --font-bebas: var(--font-bebas);
+  --font-playfair: var(--font-playfair);
+  --font-inter: var(--font-inter);
+  --font-montserrat: var(--font-montserrat);
+
+  --shadow-gold-glow: 0 0 15px rgba(198, 167, 94, 0.4);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
+  }
+
+  body::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer utilities {
+  .text-glow {
+    text-shadow: 0 0 10px rgba(198, 167, 94, 0.5);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-\\[marquee_40s_linear_infinite\\] {
+  animation: marquee 40s linear infinite;
+}
