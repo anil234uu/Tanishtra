@@ -4,10 +4,14 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import Link from 'next/link';
 import { GoldParticles } from './GoldParticles';
+import { useParallax } from '@/hooks/useParallax';
 
 export function HeroSection() {
     const { scrollY } = useScroll();
     const scrollOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+
+    // Desktop Parallax Tracker (0.3x ratio)
+    const parallaxOffset = useParallax(0.3, true);
 
     // Split text into words for stagger effect
     const headlineText = "Crafted for Men Who Command Presence.";
@@ -18,8 +22,11 @@ export function HeroSection() {
             {/* Background with dark gradient overlay & Ken Burns */}
             <div className="absolute inset-0 bg-background-secondary z-0 overflow-hidden">
                 <div
-                    className="w-full h-full bg-cover bg-center opacity-40 grayscale animate-[heroZoom_25s_ease-in-out_infinite_alternate]"
-                    style={{ backgroundImage: "url('https://images.unsplash.com/photo-1611004128522-bc5584852c04?q=80&w=2070&auto=format&fit=crop')" }}
+                    className="w-full h-[130%] bg-cover bg-center opacity-40 grayscale animate-[heroZoom_25s_ease-in-out_infinite_alternate]"
+                    style={{
+                        backgroundImage: "url('https://images.unsplash.com/photo-1611004128522-bc5584852c04?q=80&w=2070&auto=format&fit=crop')",
+                        ...parallaxOffset
+                    }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0D] via-[#0B0B0D]/60 to-transparent z-10" />
                 <GoldParticles />

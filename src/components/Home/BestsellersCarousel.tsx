@@ -2,6 +2,7 @@
 import React, { useRef } from 'react';
 import Link from 'next/link';
 import { ProductCard, type Product } from '@/components/ui/ProductCard';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export function BestsellersCarousel() {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -53,10 +54,17 @@ export function BestsellersCarousel() {
         }
     ];
 
+    const headerAnim = useScrollAnimation({ type: 'fade-up', delay: 100 });
+    const carouselAnim = useScrollAnimation({ type: 'stagger' });
+
     return (
         <section className="py-24 bg-background border-b border-border overflow-hidden">
             <div className="max-w-[1400px] mx-auto px-4 sm:px-8">
-                <div className="flex justify-between items-end mb-12">
+                <div
+                    ref={headerAnim.ref}
+                    style={headerAnim.styles}
+                    className="flex justify-between items-end mb-12"
+                >
                     <div>
                         <span className="font-montserrat text-[11px] text-accent-gold uppercase tracking-[2px] block mb-2">Most Wanted</span>
                         <h2 className="font-bebas text-5xl tracking-widest text-text">BESTSELLERS</h2>
@@ -70,12 +78,25 @@ export function BestsellersCarousel() {
             {/* Full bleed mobile scroll */}
             <div className="pl-4 sm:pl-8 max-w-[1400px] mx-auto">
                 <div
-                    ref={scrollContainerRef}
+                    ref={(el) => {
+                        // @ts-ignore
+                        scrollContainerRef.current = el;
+                        // @ts-ignore
+                        carouselAnim.ref.current = el;
+                    }}
                     className="flex gap-6 overflow-x-auto pb-8 pr-4 sm:pr-8 snap-x snap-mandatory scrollbar-hide"
-                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+                    style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', ...carouselAnim.styles }}
                 >
-                    {bestsellers.map((product) => (
-                        <div key={product.id} className="snap-start shrink-0">
+                    {bestsellers.map((product, idx) => (
+                        <div
+                            key={product.id}
+                            style={{
+                                opacity: carouselAnim.isVisible ? 1 : 0,
+                                transform: carouselAnim.isVisible ? 'translateY(0)' : 'translateY(30px)',
+                                transition: `all 700ms cubic-bezier(0.16, 1, 0.3, 1) ${idx * 80}ms`
+                            }}
+                            className="snap-start shrink-0 min-w-[280px] md:min-w-[320px] max-w-[320px]"
+                        >
                             <ProductCard product={product} />
                         </div>
                     ))}

@@ -15,6 +15,8 @@ import { CookieConsent } from "@/components/ui/CookieConsent";
 import { OverlaySearch } from "@/components/ui/OverlaySearch";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
 import { WelcomeBackToast } from "@/components/ui/WelcomeBackToast";
+import { BrandPreloader } from "@/components/ui/BrandPreloader";
+import { PageTransition } from "@/components/ui/PageTransition";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -53,13 +55,16 @@ export default function RootLayout({
         className={`${bebasNeue.variable} ${playfairDisplay.variable} ${inter.variable} ${montserrat.variable} antialiased font-inter bg-background text-text min-h-screen flex flex-col border-none outline-none overflow-x-hidden`}
       >
         <ScrollProgress />
+        <BrandPreloader />
         <ExitIntentPopup />
         <WelcomeBackToast />
         <AnnouncementBar />
         <MainHeader />
 
-        <main className="flex-1 mt-[96px] md:mt-[108px] overflow-x-hidden">
-          {children}
+        <main className="flex-1 mt-[96px] md:mt-[108px] overflow-x-hidden flex flex-col min-h-screen">
+          <PageTransition>
+            {children}
+          </PageTransition>
         </main>
 
         <Footer />

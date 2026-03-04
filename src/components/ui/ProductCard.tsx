@@ -9,6 +9,7 @@ export interface ProductImages {
     primary: string;
     hover?: string;
     gallery?: string[];
+    video?: string;
 }
 
 export interface Product {
@@ -141,7 +142,7 @@ export function ProductCard({ product, variant = 'bestseller' }: ProductCardProp
 
     if (variant === 'newArrival') {
         return (
-            <Link href={`/products/${product.id}`} className={`block group relative w-full aspect-[3/4] bg-[#16161B] rounded-lg border border-[#1F1F25] transition-all duration-300 hover:shadow-[0_8px_30px_rgba(0,0,0,0.3),_0_0_0_1px_rgba(198,167,94,0.3),_0_0_40px_rgba(198,167,94,0.08)] ${isSoldOut ? 'opacity-60 grayscale-[50%]' : ''}`}>
+            <Link href={`/products/${product.id}`} className={`block group relative w-full aspect-[3/4] bg-[#16161B] rounded-lg border border-[#1F1F25] transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[8px] hover:border-[rgba(198,167,94,0.4)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.3),_0_0_0_1px_rgba(198,167,94,0.2),_0_0_60px_rgba(198,167,94,0.05)] ${isSoldOut ? 'opacity-60 grayscale-[50%]' : ''}`}>
                 {/* Image Swap System */}
                 <div className="absolute inset-0 overflow-hidden rounded-lg">
                     <img
@@ -163,7 +164,7 @@ export function ProductCard({ product, variant = 'bestseller' }: ProductCardProp
                 {/* Bottom Overlay Gradient & Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-[rgba(11,11,13,0.95)] via-[rgba(11,11,13,0.5)] to-transparent flex flex-col z-10">
                     <span className="font-montserrat text-[10px] uppercase text-[#C6A75E] tracking-[1px] mb-1">{product.category}</span>
-                    <h3 className="font-inter text-[18px] font-bold text-[#F5F5F7] line-clamp-2 leading-tight mb-2">{product.name}</h3>
+                    <h3 className="font-inter text-[18px] font-bold text-[#F5F5F7] group-hover:text-accent-gold transition-colors duration-400 line-clamp-2 leading-tight mb-2">{product.name}</h3>
 
                     <div className="flex flex-wrap items-center gap-2 mb-0">
                         <span className="font-montserrat text-[18px] font-bold text-[#C6A75E]">₹{product.price.toLocaleString('en-IN')}</span>
@@ -207,7 +208,7 @@ export function ProductCard({ product, variant = 'bestseller' }: ProductCardProp
 
     // Default Variant
     return (
-        <Link href={`/products/${product.id}`} className={`block group w-full bg-[#16161B] p-4 rounded-lg border border-[#1F1F25] transition-all duration-[300ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[6px] hover:shadow-[0_8px_30px_rgba(0,0,0,0.3),_0_0_0_1px_rgba(198,167,94,0.3),_0_0_40px_rgba(198,167,94,0.08)] relative cursor-pointer flex flex-col h-full ${isSoldOut ? 'opacity-70 grayscale-[30%]' : ''}`}>
+        <Link href={`/products/${product.id}`} className={`block group w-full bg-[#16161B] p-4 rounded-lg border border-[#1F1F25] transition-all duration-[400ms] ease-[cubic-bezier(0.16,1,0.3,1)] hover:-translate-y-[8px] hover:border-[rgba(198,167,94,0.4)] hover:shadow-[0_12px_40px_rgba(0,0,0,0.3),_0_0_0_1px_rgba(198,167,94,0.2),_0_0_60px_rgba(198,167,94,0.05)] relative cursor-pointer flex flex-col h-full ${isSoldOut ? 'opacity-70 grayscale-[30%]' : ''}`}>
 
             {/* Target Image Box */}
             <div className="relative aspect-square rounded-lg overflow-hidden bg-[#0F0F12] mb-3">
@@ -246,7 +247,7 @@ export function ProductCard({ product, variant = 'bestseller' }: ProductCardProp
 
             {/* Info Area */}
             <div className="flex flex-col flex-1">
-                <h3 className="font-inter text-[16px] md:text-[18px] font-bold text-[#F5F5F7] line-clamp-2 leading-tight mb-2 min-h-[44px]">
+                <h3 className="font-inter text-[16px] md:text-[18px] font-bold text-[#F5F5F7] group-hover:text-accent-gold transition-colors duration-400 line-clamp-2 leading-tight mb-2 min-h-[44px]">
                     {product.name}
                 </h3>
 

@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Fragment } from 'react';
 import sectionComponents from './sections';
+import { SectionDivider } from '@/components/ui/SectionDivider';
 
 interface Section {
     id: string;
@@ -36,7 +37,7 @@ export default function SectionRenderer({ sections: initialSections }: SectionRe
 
     return (
         <>
-            {activeSections.map(section => {
+            {activeSections.map((section, index) => {
                 const Component = sectionComponents[section.type];
 
                 if (!Component) {
@@ -45,11 +46,14 @@ export default function SectionRenderer({ sections: initialSections }: SectionRe
                 }
 
                 return (
-                    <Component
-                        key={section.id}
-                        id={section.id}
-                        settings={section.settings}
-                    />
+                    <Fragment key={section.id}>
+                        <Component
+                            id={section.id}
+                            settings={section.settings}
+                        />
+                        {/* 16.3: Render Gold Divider between all sections except after the last one */}
+                        {index < activeSections.length - 1 && <SectionDivider />}
+                    </Fragment>
                 );
             })}
         </>

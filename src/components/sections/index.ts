@@ -18,6 +18,7 @@ const sectionComponents: Record<string, any> = {
     'imageWithText': dynamic(() => import('./ImageWithTextSection')),
     'videoSection': dynamic(() => import('./VideoSection')),
     'customHtml': dynamic(() => import('./CustomHtmlSection')),
+    'lifestyleGallery': dynamic(() => import('./LifestyleGallerySection')),
 };
 
 export default sectionComponents;

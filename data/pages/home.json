@@ -118,10 +118,43 @@
             }
         },
         {
+            "id": "lifestyle-gallery",
+            "type": "lifestyleGallery",
+            "enabled": true,
+            "order": 5,
+            "settings": {
+                "eyebrow": "THE LOOK",
+                "title": "Styled by Tanishtra",
+                "subtitle": "See our pieces in action",
+                "images": [
+                    {
+                        "url": "https://images.unsplash.com/photo-1599643478524-fb66f7ca2b67?auto=format&fit=crop&q=80&w=800",
+                        "productName": "Cuban Chain",
+                        "productLink": "/products/cbn-01"
+                    },
+                    {
+                        "url": "https://images.unsplash.com/photo-1620608560238-ab93d395be46?auto=format&fit=crop&q=80&w=800",
+                        "productName": "TitanCore Ring",
+                        "productLink": "/products/rng-01"
+                    },
+                    {
+                        "url": "https://images.unsplash.com/photo-1573408301145-b98c46544ea0?auto=format&fit=crop&q=80&w=800",
+                        "productName": "Onyx Bracelet",
+                        "productLink": "/products/brc-01"
+                    },
+                    {
+                        "url": "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=1200",
+                        "productName": "Snake Chain",
+                        "productLink": "/products/chn-02"
+                    }
+                ]
+            }
+        },
+        {
             "id": "testimonials-mini",
             "type": "testimonialSlider",
             "enabled": true,
-            "order": 5,
+            "order": 6,
             "settings": {
                 "reviews": [
                     {
@@ -154,7 +187,7 @@
             "id": "brand-story",
             "type": "editorialBanner",
             "enabled": true,
-            "order": 6,
+            "order": 7,
             "settings": {
                 "eyebrow": "THE TANISHTRA STORY",
                 "headline": "Not Just Accessories.\nArmor for the\nModern Man.",
@@ -170,7 +203,7 @@
             "id": "craftsmanship",
             "type": "processSteps",
             "enabled": true,
-            "order": 7,
+            "order": 8,
             "settings": {
                 "eyebrow": "THE PROCESS",
                 "title": "How a Tanishtra Piece Comes to Life",
@@ -208,7 +241,7 @@
             "id": "new-collection",
             "type": "collectionBanner",
             "enabled": true,
-            "order": 8,
+            "order": 9,
             "settings": {
                 "eyebrow": "NEW COLLECTION — 2026",
                 "collectionName": "The Titan Series",
@@ -238,7 +271,7 @@
             "id": "why-tanishtra",
             "type": "trustFeatures",
             "enabled": true,
-            "order": 9,
+            "order": 10,
             "settings": {
                 "features": [
                     {
@@ -265,7 +298,7 @@
             "id": "new-arrivals",
             "type": "productShowcase",
             "enabled": true,
-            "order": 10,
+            "order": 11,
             "settings": {
                 "eyebrow": "✦ JUST DROPPED",
                 "title": "Just Dropped",
@@ -292,7 +325,7 @@
             "id": "instagram-feed",
             "type": "instagramGrid",
             "enabled": true,
-            "order": 11,
+            "order": 12,
             "settings": {
                 "eyebrow": "COMMUNITY",
                 "title": "#TanishtraMen",
@@ -308,7 +341,7 @@
             "id": "newsletter",
             "type": "newsletter",
             "enabled": true,
-            "order": 12,
+            "order": 13,
             "settings": {
                 "eyebrow": "INNER CIRCLE",
                 "headline": "Get 10% Off Your First Order",
@@ -322,7 +355,7 @@
             "id": "promo-banner",
             "type": "promoBanner",
             "enabled": false,
-            "order": 13,
+            "order": 14,
             "settings": {
                 "headline": "FLAT 40% OFF — SUMMER SALE",
                 "subtitle": "Use code SUMMER40 at checkout",
