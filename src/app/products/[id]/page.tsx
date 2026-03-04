@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { Heart, Minus, Plus, Shield, Truck, Lock, ChevronDown } from 'lucide-react';
+import { Heart, Minus, Plus, Shield, Truck, Lock, ChevronDown, ShieldCheck, RotateCcw } from 'lucide-react';
 import { useCartStore } from '@/lib/store/useCartStore';
 import { useWishlistStore } from '@/lib/store/useWishlistStore';
 import { ProductCard, type Product } from '@/components/ui/ProductCard';
+import { RecentlyViewed } from '@/components/Ecommerce/RecentlyViewed';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 export default function ProductDetailPage() {
@@ -51,6 +52,11 @@ export default function ProductDetailPage() {
                         rel = [...rel, ...data.filter(p => p.isBestseller && p.id !== found.id)];
                     }
                     setRelated(rel.slice(0, 4));
+
+                    // Track recently viewed
+                    const saved = JSON.parse(localStorage.getItem('tanishtra-recently-viewed') || '[]');
+                    const newSaved = [found.id, ...saved.filter((productId: string) => productId !== found.id)].slice(0, 10);
+                    localStorage.setItem('tanishtra-recently-viewed', JSON.stringify(newSaved));
                 }
                 setIsLoading(false);
             })
@@ -330,6 +336,9 @@ export default function ProductDetailPage() {
                     </div>
                 </section>
             )}
+
+            {/* Recently Viewed */}
+            <RecentlyViewed currentProductId={product.id} />
 
             {/* Mobile Sticky Add To Cart */}
             <AnimatePresence>

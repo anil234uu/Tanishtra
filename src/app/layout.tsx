@@ -4,7 +4,6 @@ import "./globals.css";
 import { AnnouncementBar } from "@/components/Header/AnnouncementBar";
 import { MainHeader } from "@/components/Header/MainHeader";
 import { MobileBottomNav } from "@/components/Header/MobileBottomNav";
-import { MobileMenu } from "@/components/Header/MobileMenu";
 import { Footer } from "@/components/Footer/Footer";
 import { CartDrawer } from "@/components/Ecommerce/CartDrawer";
 import { QuickViewModal } from "@/components/Ecommerce/QuickViewModal";
@@ -15,6 +14,7 @@ import { BackToTop } from "@/components/ui/BackToTop";
 import { CookieConsent } from "@/components/ui/CookieConsent";
 import { OverlaySearch } from "@/components/ui/OverlaySearch";
 import { ScrollProgress } from "@/components/ui/ScrollProgress";
+import { WelcomeBackToast } from "@/components/ui/WelcomeBackToast";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -53,9 +53,10 @@ export default function RootLayout({
         className={`${bebasNeue.variable} ${playfairDisplay.variable} ${inter.variable} ${montserrat.variable} antialiased font-inter bg-background text-text min-h-screen flex flex-col border-none outline-none overflow-x-hidden`}
       >
         <ScrollProgress />
+        <ExitIntentPopup />
+        <WelcomeBackToast />
         <AnnouncementBar />
         <MainHeader />
-        <MobileMenu />
 
         <main className="flex-1 mt-[96px] md:mt-[108px] overflow-x-hidden">
           {children}

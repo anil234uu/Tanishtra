@@ -12,6 +12,10 @@ import { NewArrivals } from "@/components/Home/NewArrivals";
 import { InstagramStrip } from "@/components/Home/InstagramStrip";
 import { NewsletterCapture } from "@/components/Home/NewsletterCapture";
 
+const Divider = () => (
+  <div className="w-full max-w-[800px] mx-auto h-[1px] bg-gradient-to-r from-transparent via-accent-gold/20 to-transparent my-4 opacity-70" />
+);
+
 export const metadata = {
   title: "Tanishtra | Chains & Rings for the Modern Man",
   description: "Mumbai-based men's luxury accessories. Premium chains, lockets, rings, and bracelets engineered for presence and built for everyday dominance.",
@@ -25,11 +29,17 @@ export default function Home() {
       <SocialTicker />
       <CategoryGrid />
       <Bestsellers />
+      <Divider />
       <BrandStory />
+      <Divider />
       <TitanSeries />
+      <Divider />
       <CraftsmanshipProcess />
+      <Divider />
       <TrustFeatures />
+      <Divider />
       <CustomerReviews />
+      <Divider />
       <NewArrivals />
       <InstagramStrip />
       <NewsletterCapture />
