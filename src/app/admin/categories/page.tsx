@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { Plus, Edit2, Trash2, X } from 'lucide-react';
+import { ImageUpload } from '@/components/Admin/ImageUpload';
 
 interface Category {
     id: string;
@@ -130,8 +131,15 @@ export default function AdminCategoriesPage() {
                                     <input type="text" value={formData.slug} onChange={e => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-') })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
                                 </div>
                                 <div className="flex flex-col gap-2">
-                                    <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Cover Image URL</label>
-                                    <input type="url" value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
+                                    <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Cover Image (Vertical Aspect Suggested)</label>
+                                    <div className="bg-background border border-border rounded p-4">
+                                        <ImageUpload
+                                            currentImage={formData.image}
+                                            onImageUpload={(url) => setFormData({ ...formData, image: url })}
+                                            onImageRemove={() => setFormData({ ...formData, image: '' })}
+                                            aspectRatio="3:4"
+                                        />
+                                    </div>
                                 </div>
                                 {editingCategory && (
                                     <div className="flex flex-col gap-2">

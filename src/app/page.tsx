@@ -1,48 +1,15 @@
-import { HeroSection } from "@/components/Home/HeroSection";
-import { TrustedLogos } from "@/components/Home/TrustedLogos";
-import { SocialTicker } from "@/components/Home/SocialTicker";
-import { CategoryGrid } from "@/components/Home/CategoryGrid";
-import { Bestsellers } from "@/components/Home/Bestsellers";
-import { BrandStory } from "@/components/Home/BrandStory";
-import { TitanSeries } from "@/components/Home/TitanSeries";
-import { CraftsmanshipProcess } from "@/components/Home/CraftsmanshipProcess";
-import { TrustFeatures } from "@/components/Home/TrustFeatures";
-import { CustomerReviews } from "@/components/Home/CustomerReviews";
-import { NewArrivals } from "@/components/Home/NewArrivals";
-import { InstagramStrip } from "@/components/Home/InstagramStrip";
-import { NewsletterCapture } from "@/components/Home/NewsletterCapture";
-
-const Divider = () => (
-  <div className="w-full max-w-[800px] mx-auto h-[1px] bg-gradient-to-r from-transparent via-accent-gold/20 to-transparent my-4 opacity-70" />
-);
+import SectionRenderer from '@/components/SectionRenderer';
+import homePageData from '../../data/pages/home.json';
 
 export const metadata = {
   title: "Tanishtra | Chains & Rings for the Modern Man",
   description: "Mumbai-based men's luxury accessories. Premium chains, lockets, rings, and bracelets engineered for presence and built for everyday dominance.",
 };
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex flex-col flex-1 w-full bg-background overflow-x-hidden">
-      <HeroSection />
-      <TrustedLogos />
-      <SocialTicker />
-      <CategoryGrid />
-      <Bestsellers />
-      <Divider />
-      <BrandStory />
-      <Divider />
-      <TitanSeries />
-      <Divider />
-      <CraftsmanshipProcess />
-      <Divider />
-      <TrustFeatures />
-      <Divider />
-      <CustomerReviews />
-      <Divider />
-      <NewArrivals />
-      <InstagramStrip />
-      <NewsletterCapture />
-    </div>
+    <main className="flex flex-col flex-1 w-full bg-background overflow-x-hidden">
+      <SectionRenderer sections={homePageData.sections} />
+    </main>
   );
 }

@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, Package, Folders, Settings, LogOut, ExternalLink, Menu, X } from 'lucide-react';
+import { LayoutDashboard, Package, Folders, Settings, LogOut, ExternalLink, Menu, X, Image as ImageIcon, FileText, Link as LinkIcon, Edit3, Send, Mail, Search, Sliders } from 'lucide-react';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -91,11 +91,34 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         );
     }
 
-    const NAV_LINKS = [
-        { name: 'Overview', href: '/admin', icon: <LayoutDashboard size={20} /> },
-        { name: 'Products', href: '/admin/products', icon: <Package size={20} /> },
-        { name: 'Categories', href: '/admin/categories', icon: <Folders size={20} /> },
-        { name: 'Settings', href: '/admin/settings', icon: <Settings size={20} /> },
+    const NAV_GROUPS = [
+        {
+            label: 'Management',
+            links: [
+                { name: 'Dashboard', href: '/admin', icon: <LayoutDashboard size={20} /> },
+                { name: 'Products', href: '/admin/products', icon: <Package size={20} /> },
+                { name: 'Categories', href: '/admin/categories', icon: <Folders size={20} /> },
+                { name: 'Blog Posts', href: '/admin/blog', icon: <Edit3 size={20} /> },
+            ]
+        },
+        {
+            label: 'CMS',
+            links: [
+                { name: 'Pages', href: '/admin/pages', icon: <FileText size={20} /> },
+                { name: 'Design Settings', href: '/admin/settings', icon: <Settings size={20} /> },
+                { name: 'Navigation', href: '/admin/navigation', icon: <LinkIcon size={20} /> },
+                { name: 'Media Library', href: '/admin/media', icon: <ImageIcon size={20} /> },
+            ]
+        },
+        {
+            label: 'Data',
+            links: [
+                { name: 'Submissions', href: '/admin/submissions', icon: <Send size={20} /> },
+                { name: 'Newsletter', href: '/admin/newsletter', icon: <Mail size={20} /> },
+                { name: 'SEO Settings', href: '/admin/seo', icon: <Search size={20} /> },
+                { name: 'General', href: '/admin/general', icon: <Sliders size={20} /> },
+            ]
+        }
     ];
 
     return (
@@ -119,23 +142,26 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </button>
                 </div>
 
-                <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-2 px-4">
-                    <span className="font-montserrat text-[10px] uppercase text-text-muted tracking-[2px] px-2 mb-2">Management</span>
-
-                    {NAV_LINKS.map(link => {
-                        const isActive = pathname === link.href || (link.href !== '/admin' && pathname.startsWith(link.href));
-                        return (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                onClick={() => setIsSidebarOpen(false)}
-                                className={`flex items-center gap-3 px-3 py-2.5 rounded transition-all ${isActive ? 'bg-accent-gold/10 text-accent-gold border border-accent-gold/30 font-bold' : 'text-text-secondary hover:text-text hover:bg-background'}`}
-                            >
-                                {link.icon}
-                                <span className="font-inter text-[15px]">{link.name}</span>
-                            </Link>
-                        )
-                    })}
+                <div className="flex-1 overflow-y-auto py-6 flex flex-col gap-6 px-4 no-scrollbar">
+                    {NAV_GROUPS.map(group => (
+                        <div key={group.label} className="flex flex-col gap-2">
+                            <span className="font-montserrat text-[10px] uppercase text-text-muted tracking-[2px] px-2 mb-1">{group.label}</span>
+                            {group.links.map(link => {
+                                const isActive = pathname === link.href || (link.href !== '/admin' && pathname.startsWith(link.href));
+                                return (
+                                    <Link
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={() => setIsSidebarOpen(false)}
+                                        className={`flex items-center gap-3 px-3 py-2.5 rounded transition-all ${isActive ? 'bg-accent-gold/10 text-accent-gold border border-accent-gold/30 font-bold' : 'text-text-secondary hover:text-text hover:bg-background'}`}
+                                    >
+                                        {link.icon}
+                                        <span className="font-inter text-[14px]">{link.name}</span>
+                                    </Link>
+                                )
+                            })}
+                        </div>
+                    ))}
                 </div>
 
                 <div className="p-4 border-t border-border flex flex-col gap-2">

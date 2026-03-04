@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { Plus, Search, Edit2, Trash2, X } from 'lucide-react';
-import type { Product } from '@/components/ui/ProductCard';
+import { ImageUpload } from '@/components/Admin/ImageUpload';
+import { MultiImageUpload, type UploadedImage } from '@/components/Admin/MultiImageUpload';
+import type { Product, ProductImages } from '@/components/ui/ProductCard';
 
 export default function AdminProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
@@ -15,9 +17,14 @@ export default function AdminProductsPage() {
     // Form State
     const [formData, setFormData] = useState({
         name: '', category: 'CHAIN', price: 0, originalPrice: 0, discount: 0,
-        image: '', description: '', isBestseller: false, isNew: false,
+        description: '', isBestseller: false, isNew: false,
         status: 'active', stockText: '', badge: ''
     });
+
+    // Advanced Image State
+    const [primaryImage, setPrimaryImage] = useState<string>('');
+    const [hoverImage, setHoverImage] = useState<string>('');
+    const [galleryImages, setGalleryImages] = useState<UploadedImage[]>([]);
 
     const fetchProducts = () => {
         setIsLoading(true);
@@ -31,7 +38,10 @@ export default function AdminProductsPage() {
 
     const openAddModal = () => {
         setEditingProduct(null);
-        setFormData({ name: '', category: 'CHAIN', price: 0, originalPrice: 0, discount: 0, image: '', description: '', isBestseller: false, isNew: false, status: 'active', stockText: '', badge: '' });
+        setFormData({ name: '', category: 'CHAIN', price: 0, originalPrice: 0, discount: 0, description: '', isBestseller: false, isNew: false, status: 'active', stockText: '', badge: '' });
+        setPrimaryImage('');
+        setHoverImage('');
+        setGalleryImages([]);
         setIsModalOpen(true);
     };
 
@@ -43,7 +53,6 @@ export default function AdminProductsPage() {
             price: product.price || 0,
             originalPrice: product.originalPrice || 0,
             discount: product.discount || 0,
-            image: product.image || '',
             description: (product as any).description || '',
             isBestseller: !!product.isBestseller,
             isNew: !!product.isNew,
@@ -51,6 +60,12 @@ export default function AdminProductsPage() {
             stockText: product.stockText || '',
             badge: product.badge || ''
         });
+
+        // Hydrate image state accurately prioritizing the Phase 8 schema
+        setPrimaryImage(product.images?.primary || product.image || '');
+        setHoverImage(product.images?.hover || product.hoverImage || '');
+        setGalleryImages((product.images?.gallery || []).map(url => ({ url, publicId: url }))); // Simplistic hydration if publicId isn't explicitly stored
+
         setIsModalOpen(true);
     };
 
@@ -68,7 +83,20 @@ export default function AdminProductsPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const method = editingProduct ? 'PUT' : 'POST';
-        const bodyObj = editingProduct ? { ...formData, id: editingProduct.id } : formData;
+
+        // Assemble final nested data structure
+        const finalData = {
+            ...formData,
+            image: primaryImage, // Maintain backwards compatibility for existing systems
+            hoverImage: hoverImage,
+            images: {
+                primary: primaryImage,
+                hover: hoverImage || undefined,
+                gallery: galleryImages.map(img => img.url)
+            }
+        };
+
+        const bodyObj = editingProduct ? { ...finalData, id: editingProduct.id } : finalData;
 
         await fetch('/api/products', {
             method,
@@ -132,7 +160,7 @@ export default function AdminProductsPage() {
                                 <tr key={product.id} className="hover:bg-background-secondary/50 transition-colors">
                                     <td className="p-4 flex items-center gap-4">
                                         <div className="w-14 h-14 rounded bg-background-card overflow-hidden border border-border shrink-0">
-                                            <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                                            <img src={product.images?.primary || product.image} alt={product.name} className="w-full h-full object-cover" />
                                         </div>
                                         <div>
                                             <span className="font-inter text-sm text-text font-bold block mb-1">{product.name}</span>
@@ -190,74 +218,114 @@ export default function AdminProductsPage() {
                         </div>
 
                         <div className="p-6 overflow-y-auto overflow-x-hidden flex-1 no-scrollbar">
-                            <form id="product-form" onSubmit={handleSubmit} className="flex flex-col gap-5">
+                            <form id="product-form" onSubmit={handleSubmit} className="flex flex-col lg:flex-row gap-8">
 
-                                <div className="flex flex-col gap-2">
-                                    <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Product Name</label>
-                                    <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-4">
+                                {/* LEFT COLUMN: Metadata (60%) */}
+                                <div className="flex flex-col gap-5 flex-[6]">
                                     <div className="flex flex-col gap-2">
-                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Category</label>
-                                        <select value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors appearance-none">
-                                            <option value="CHAIN">CHAIN</option>
-                                            <option value="LOCKET & CHAIN">LOCKET & CHAIN</option>
-                                            <option value="BRACELET">BRACELET</option>
-                                            <option value="KADA">KADA</option>
-                                            <option value="RING">RING</option>
-                                        </select>
+                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Product Name</label>
+                                        <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Status</label>
-                                        <select value={formData.status || 'active'} onChange={e => setFormData({ ...formData, status: e.target.value })} className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors appearance-none">
-                                            <option value="active">Active</option>
-                                            <option value="draft">Draft</option>
-                                        </select>
-                                    </div>
-                                </div>
 
-                                <div className="grid grid-cols-3 gap-4">
                                     <div className="flex flex-col gap-2">
-                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Sale Price (₹)</label>
-                                        <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: Number(e.target.value) })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
+                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Short Description</label>
+                                        <textarea rows={4} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors resize-none" />
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">MRP (₹)</label>
-                                        <input type="number" value={formData.originalPrice} onChange={e => setFormData({ ...formData, originalPrice: Number(e.target.value) })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Discount %</label>
-                                        <input type="number" value={formData.discount} onChange={e => setFormData({ ...formData, discount: Number(e.target.value) })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
-                                    </div>
-                                </div>
 
-                                <div className="flex flex-col gap-2">
-                                    <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Image URL</label>
-                                    <input type="url" value={formData.image} onChange={e => setFormData({ ...formData, image: e.target.value })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
-                                </div>
-
-                                <div className="flex flex-col gap-2">
-                                    <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Description</label>
-                                    <textarea rows={3} value={formData.description} onChange={e => setFormData({ ...formData, description: e.target.value })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors resize-none" />
-                                </div>
-
-                                <div className="flex items-center gap-6 mt-2 border-t border-border pt-4">
-                                    <label className="flex items-center gap-2 cursor-pointer group">
-                                        <div className="w-5 h-5 rounded border border-border flex items-center justify-center group-hover:border-accent-gold transition-colors">
-                                            {formData.isBestseller && <div className="w-3 h-3 bg-accent-gold rounded-sm"></div>}
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div className="flex flex-col gap-2">
+                                            <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Category</label>
+                                            <select value={formData.category} onChange={e => setFormData({ ...formData, category: e.target.value })} className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors appearance-none">
+                                                <option value="CHAIN">CHAIN</option>
+                                                <option value="LOCKET & CHAIN">LOCKET & CHAIN</option>
+                                                <option value="BRACELET">BRACELET</option>
+                                                <option value="KADA">KADA</option>
+                                                <option value="RING">RING</option>
+                                            </select>
                                         </div>
-                                        <input type="checkbox" checked={formData.isBestseller} onChange={e => setFormData({ ...formData, isBestseller: e.target.checked })} className="hidden" />
-                                        <span className="font-inter text-sm text-text">Mark as Bestseller</span>
-                                    </label>
-
-                                    <label className="flex items-center gap-2 cursor-pointer group">
-                                        <div className="w-5 h-5 rounded border border-border flex items-center justify-center group-hover:border-accent-gold transition-colors">
-                                            {formData.isNew && <div className="w-3 h-3 bg-accent-gold rounded-sm"></div>}
+                                        <div className="flex flex-col gap-2">
+                                            <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Status</label>
+                                            <select value={formData.status || 'active'} onChange={e => setFormData({ ...formData, status: e.target.value })} className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors appearance-none">
+                                                <option value="active">Active</option>
+                                                <option value="draft">Draft</option>
+                                            </select>
                                         </div>
-                                        <input type="checkbox" checked={formData.isNew} onChange={e => setFormData({ ...formData, isNew: e.target.checked })} className="hidden" />
-                                        <span className="font-inter text-sm text-text">Mark as New Arrival</span>
-                                    </label>
+                                    </div>
+
+                                    <div className="grid grid-cols-3 gap-4">
+                                        <div className="flex flex-col gap-2">
+                                            <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Sale Price (₹)</label>
+                                            <input type="number" value={formData.price} onChange={e => setFormData({ ...formData, price: Number(e.target.value) })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">MRP (₹)</label>
+                                            <input type="number" value={formData.originalPrice} onChange={e => setFormData({ ...formData, originalPrice: Number(e.target.value) })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
+                                        </div>
+                                        <div className="flex flex-col gap-2">
+                                            <label className="font-montserrat text-[11px] uppercase tracking-[1px] text-text-secondary font-bold">Discount %</label>
+                                            <input type="number" value={formData.discount} onChange={e => setFormData({ ...formData, discount: Number(e.target.value) })} required className="bg-background border border-border rounded px-4 py-3 text-text font-inter focus:outline-none focus:border-accent-gold transition-colors" />
+                                        </div>
+                                    </div>
+
+                                    <div className="flex items-center gap-6 mt-2 border-t border-border pt-4">
+                                        <label className="flex items-center gap-2 cursor-pointer group">
+                                            <div className="w-5 h-5 rounded border border-border flex items-center justify-center group-hover:border-accent-gold transition-colors bg-background">
+                                                {formData.isBestseller && <div className="w-3 h-3 bg-accent-gold rounded-sm"></div>}
+                                            </div>
+                                            <input type="checkbox" checked={formData.isBestseller} onChange={e => setFormData({ ...formData, isBestseller: e.target.checked })} className="hidden" />
+                                            <span className="font-inter text-sm text-text">Mark as Bestseller</span>
+                                        </label>
+
+                                        <label className="flex items-center gap-2 cursor-pointer group">
+                                            <div className="w-5 h-5 rounded border border-border flex items-center justify-center group-hover:border-accent-gold transition-colors bg-background">
+                                                {formData.isNew && <div className="w-3 h-3 bg-accent-gold rounded-sm"></div>}
+                                            </div>
+                                            <input type="checkbox" checked={formData.isNew} onChange={e => setFormData({ ...formData, isNew: e.target.checked })} className="hidden" />
+                                            <span className="font-inter text-sm text-text">Mark as New Arrival</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                {/* RIGHT COLUMN: Image Manager (40%) */}
+                                <div className="flex flex-col gap-6 flex-[4] bg-background p-5 rounded-lg border border-border">
+                                    <h3 className="font-inter text-[16px] font-bold text-[#F5F5F7]">Product Images</h3>
+
+                                    <div className="flex flex-col gap-3">
+                                        <div>
+                                            <label className="font-inter text-[13px] text-[#A1A1AA] block mb-2">Main Product Image</label>
+                                            <ImageUpload
+                                                currentImage={primaryImage}
+                                                onImageUpload={(url) => setPrimaryImage(url)}
+                                                onImageRemove={() => setPrimaryImage('')}
+                                                aspectRatio="1:1"
+                                            />
+                                        </div>
+
+                                        <div className="border-t border-border pt-4 mt-2">
+                                            <div className="mb-2">
+                                                <label className="font-inter text-[13px] text-[#A1A1AA] block">Additional Images (Gallery)</label>
+                                                <span className="font-inter text-[11px] text-[#6B6B73]">Drag to reorder. First image acts as primary if main is missing.</span>
+                                            </div>
+                                            <MultiImageUpload
+                                                images={galleryImages}
+                                                onImagesChange={setGalleryImages}
+                                                maxImages={6}
+                                            />
+                                        </div>
+
+                                        <div className="border-t border-border pt-4 mt-2">
+                                            <div className="mb-2">
+                                                <label className="font-inter text-[13px] text-[#A1A1AA] block">Hover Image (Optional)</label>
+                                                <span className="font-inter text-[11px] text-[#6B6B73]">Shown when customer hovers on product card</span>
+                                            </div>
+                                            <ImageUpload
+                                                currentImage={hoverImage}
+                                                onImageUpload={(url) => setHoverImage(url)}
+                                                onImageRemove={() => setHoverImage('')}
+                                                aspectRatio="1:1"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
 
                             </form>

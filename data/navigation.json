@@ -1,0 +1,85 @@
+{
+    "header": [
+        {
+            "id": "1",
+            "label": "COLLECTIONS",
+            "url": "/collections"
+        },
+        {
+            "id": "2",
+            "label": "BESTSELLERS",
+            "url": "/collections/bestsellers"
+        },
+        {
+            "id": "3",
+            "label": "NEW ARRIVALS",
+            "url": "/collections/new-arrivals"
+        },
+        {
+            "id": "4",
+            "label": "ABOUT",
+            "url": "/about"
+        }
+    ],
+    "mobile": [
+        {
+            "id": "m1",
+            "label": "HOME",
+            "url": "/"
+        },
+        {
+            "id": "m2",
+            "label": "CHAINS",
+            "url": "/collections/chains"
+        },
+        {
+            "id": "m3",
+            "label": "LOCKETS",
+            "url": "/collections/locket-chain"
+        },
+        {
+            "id": "m4",
+            "label": "BRACELETS",
+            "url": "/collections/bracelets"
+        },
+        {
+            "id": "m5",
+            "label": "RINGS",
+            "url": "/collections/rings"
+        }
+    ],
+    "footer": [
+        {
+            "id": "c1",
+            "title": "SHOP",
+            "links": [
+                {
+                    "id": "l1",
+                    "label": "Chain",
+                    "url": "/collections/chains"
+                },
+                {
+                    "id": "l2",
+                    "label": "Bracelet",
+                    "url": "/collections/bracelets"
+                }
+            ]
+        },
+        {
+            "id": "c2",
+            "title": "SUPPORT",
+            "links": [
+                {
+                    "id": "s1",
+                    "label": "Shipping Policy",
+                    "url": "/shipping-policy"
+                },
+                {
+                    "id": "s2",
+                    "label": "Return Policy",
+                    "url": "/return-policy"
+                }
+            ]
+        }
+    ]
+}

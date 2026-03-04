@@ -5,6 +5,12 @@ import { Heart } from 'lucide-react';
 import { useWishlistStore } from '@/lib/store/useWishlistStore';
 import { useCartStore } from '@/lib/store/useCartStore';
 
+export interface ProductImages {
+    primary: string;
+    hover?: string;
+    gallery?: string[];
+}
+
 export interface Product {
     id: string;
     name: string;
@@ -13,6 +19,7 @@ export interface Product {
     originalPrice?: number;
     discount?: number;
     image: string;
+    images?: ProductImages;
     hoverImage?: string; // 3A
     rating?: number;
     reviews?: number;

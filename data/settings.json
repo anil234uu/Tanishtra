@@ -1,0 +1,64 @@
+{
+    "siteName": "Tanishtra",
+    "tagline": "Crafted for Men Who Command Presence",
+    "logo": {
+        "text": "TANISHTRA",
+        "image": "",
+        "useImage": false
+    },
+    "colors": {
+        "primary": "#0B0B0D",
+        "secondary": "#121216",
+        "card": "#16161B",
+        "accent": "#C6A75E",
+        "accentHover": "#D8B76A",
+        "textPrimary": "#F5F5F7",
+        "textSecondary": "#A1A1AA",
+        "textMuted": "#6B6B73",
+        "border": "#1F1F25",
+        "success": "#4A7C59",
+        "error": "#D04242",
+        "warning": "#D4A03C"
+    },
+    "typography": {
+        "headingFont": "Playfair Display",
+        "bodyFont": "Inter",
+        "displayFont": "Bebas Neue",
+        "labelFont": "Montserrat"
+    },
+    "contact": {
+        "email": "tanishtra@gmail.com",
+        "phone": "+91 9594700173",
+        "whatsapp": "+919594700173",
+        "address": "Goregaon West, Mumbai, Maharashtra, India"
+    },
+    "social": {
+        "instagram": "https://instagram.com/tanishtra",
+        "facebook": "https://facebook.com/tanishtra",
+        "youtube": "",
+        "twitter": "",
+        "pinterest": ""
+    },
+    "seo": {
+        "defaultTitle": "Tanishtra - Premium Men's Accessories",
+        "titleSeparator": " | ",
+        "defaultDescription": "Handcrafted chains, lockets, rings, bracelets and kadas for men who command presence.",
+        "ogImage": "/images/og-image.jpg",
+        "googleAnalyticsId": "",
+        "metaPixelId": ""
+    },
+    "shipping": {
+        "freeShippingThreshold": 999,
+        "flatRate": 49,
+        "estimatedDays": "5-7"
+    },
+    "features": {
+        "whatsappWidget": true,
+        "backToTop": true,
+        "cookieConsent": true,
+        "exitPopup": true,
+        "scrollProgress": true,
+        "announcementBar": true
+    },
+    "copyright": "© 2026 Tanishtra. All Rights Reserved."
+}

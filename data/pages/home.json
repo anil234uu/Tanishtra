@@ -1,0 +1,338 @@
+{
+    "pageTitle": "Home",
+    "pageSlug": "home",
+    "metaTitle": "Tanishtra - Premium Men's Accessories",
+    "metaDescription": "Handcrafted chains, lockets, rings, bracelets and kadas for men who command presence.",
+    "sections": [
+        {
+            "id": "announcement-bar",
+            "type": "announcementBar",
+            "enabled": true,
+            "order": 0,
+            "settings": {
+                "text": "FREE SHIPPING ON ORDERS ABOVE ₹999 • COD AVAILABLE PAN-INDIA",
+                "backgroundColor": "#C6A75E",
+                "textColor": "#0B0B0D",
+                "dismissible": true
+            }
+        },
+        {
+            "id": "hero-section",
+            "type": "hero",
+            "enabled": true,
+            "order": 1,
+            "settings": {
+                "eyebrow": "PREMIUM MEN'S ACCESSORIES",
+                "emotionalHook": "Where Heritage Meets Modern Edge",
+                "headline": "Crafted for Men Who Command Presence.",
+                "subtitle": "Premium chains, lockets, rings and bracelets designed for bold everyday style.",
+                "backgroundImage": "/images/hero-bg.jpg",
+                "primaryButtonText": "EXPLORE COLLECTION",
+                "primaryButtonLink": "/collections",
+                "secondaryButtonText": "VIEW BESTSELLERS",
+                "secondaryButtonLink": "#bestsellers",
+                "trustStrip": "✦ Free Shipping ₹999+ • ✦ COD Available • ✦ Premium Finish",
+                "showParticles": true,
+                "showScrollIndicator": true
+            }
+        },
+        {
+            "id": "social-proof-ticker",
+            "type": "socialProofTicker",
+            "enabled": true,
+            "order": 2,
+            "settings": {
+                "items": [
+                    "★★★★★ TRUSTED BY THOUSANDS",
+                    "PREMIUM QUALITY GUARANTEED",
+                    "ANTI-TARNISH FINISH",
+                    "HANDCRAFTED IN INDIA",
+                    "FAST PAN-INDIA SHIPPING",
+                    "COD AVAILABLE",
+                    "EASY RETURNS"
+                ],
+                "separator": "✦",
+                "speed": "normal"
+            }
+        },
+        {
+            "id": "shop-by-category",
+            "type": "categoryGrid",
+            "enabled": true,
+            "order": 3,
+            "settings": {
+                "eyebrow": "EXPLORE",
+                "title": "SHOP BY CATEGORY",
+                "subtitle": "Find your signature piece",
+                "categories": [
+                    {
+                        "name": "CHAIN",
+                        "image": "/images/categories/chain.jpg",
+                        "link": "/collections/chains",
+                        "productCount": "42 Products"
+                    },
+                    {
+                        "name": "LOCKET & CHAIN",
+                        "image": "/images/categories/locket.jpg",
+                        "link": "/collections/locket-chain",
+                        "productCount": "28 Products"
+                    },
+                    {
+                        "name": "BRACELET",
+                        "image": "/images/categories/bracelet.jpg",
+                        "link": "/collections/bracelets",
+                        "productCount": "35 Products"
+                    },
+                    {
+                        "name": "KADA",
+                        "image": "/images/categories/kada.jpg",
+                        "link": "/collections/kada",
+                        "productCount": "18 Products"
+                    },
+                    {
+                        "name": "RING",
+                        "image": "/images/categories/ring.jpg",
+                        "link": "/collections/rings",
+                        "productCount": "24 Products"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "bestsellers",
+            "type": "productShowcase",
+            "enabled": true,
+            "order": 4,
+            "settings": {
+                "eyebrow": "★ CUSTOMER FAVORITES",
+                "title": "Most Wanted",
+                "subtitle": "Worn daily. Chosen repeatedly.",
+                "displayType": "grid",
+                "columns": 4,
+                "maxProducts": 4,
+                "filter": "bestseller",
+                "showRatings": true,
+                "showSocialProof": true,
+                "ctaText": "VIEW ALL BESTSELLERS",
+                "ctaLink": "/collections/bestsellers"
+            }
+        },
+        {
+            "id": "testimonials-mini",
+            "type": "testimonialSlider",
+            "enabled": true,
+            "order": 5,
+            "settings": {
+                "reviews": [
+                    {
+                        "quote": "This chain offers a good balance of style and comfort. The finish feels premium for the price. Wearing it daily and getting compliments everywhere.",
+                        "author": "Varun",
+                        "date": "27 Feb 2026",
+                        "verified": true,
+                        "product": "Cuban Chain For Men (Black)"
+                    },
+                    {
+                        "quote": "The look is clean and modern. Exactly what I wanted — something bold but not over the top. Quality exceeded my expectations at this price point.",
+                        "author": "Suresh",
+                        "date": "26 Feb 2026",
+                        "verified": true,
+                        "product": "Snake Chain For Men (Silver)"
+                    },
+                    {
+                        "quote": "Ordered the bracelet on a whim. Packaging was impressive, product was even better. Already eyeing the chain collection next. Tanishtra has a customer for life.",
+                        "author": "Arjun",
+                        "date": "24 Feb 2026",
+                        "verified": true,
+                        "product": "Lava Rudraksha Bracelet"
+                    }
+                ],
+                "autoRotate": true,
+                "interval": 5000
+            }
+        },
+        {
+            "id": "brand-story",
+            "type": "editorialBanner",
+            "enabled": true,
+            "order": 6,
+            "settings": {
+                "eyebrow": "THE TANISHTRA STORY",
+                "headline": "Not Just Accessories.\nArmor for the\nModern Man.",
+                "body": "In a world of mass-produced mediocrity, Tanishtra exists for men who understand that details define the man. Every chain we craft, every ring we forge — carries the weight of intention.\n\nBorn in Mumbai. Designed for the man who leads.",
+                "backgroundImage": "/images/brand-story-bg.jpg",
+                "ctaText": "KNOW OUR STORY →",
+                "ctaLink": "/about",
+                "parallax": true,
+                "alignment": "left"
+            }
+        },
+        {
+            "id": "craftsmanship",
+            "type": "processSteps",
+            "enabled": true,
+            "order": 7,
+            "settings": {
+                "eyebrow": "THE PROCESS",
+                "title": "How a Tanishtra Piece Comes to Life",
+                "subtitle": "From vision to your wrist — every step matters.",
+                "steps": [
+                    {
+                        "number": "01",
+                        "icon": "pencil",
+                        "title": "Design",
+                        "description": "Every piece starts as a sketch. Our designers study trends across Mumbai street style and global luxury."
+                    },
+                    {
+                        "number": "02",
+                        "icon": "gem",
+                        "title": "Source",
+                        "description": "Premium stainless steel and titanium sourced from certified suppliers. No shortcuts on materials."
+                    },
+                    {
+                        "number": "03",
+                        "icon": "hammer",
+                        "title": "Craft",
+                        "description": "Skilled artisans shape each piece by hand. Gold ion plating applied for that signature Tanishtra finish."
+                    },
+                    {
+                        "number": "04",
+                        "icon": "shield-check",
+                        "title": "Perfect",
+                        "description": "Anti-tarnish coating applied. Triple quality checked. Packaged in our signature box. Ready for you."
+                    }
+                ],
+                "animateOnScroll": true
+            }
+        },
+        {
+            "id": "new-collection",
+            "type": "collectionBanner",
+            "enabled": true,
+            "order": 8,
+            "settings": {
+                "eyebrow": "NEW COLLECTION — 2026",
+                "collectionName": "The Titan Series",
+                "tagline": "Engineered for presence.\nBuilt for everyday dominance.",
+                "backgroundImage": "/images/titan-series-bg.jpg",
+                "ctaText": "EXPLORE TITAN SERIES",
+                "ctaLink": "/collections/titan-series",
+                "featuredProducts": [
+                    {
+                        "name": "TitanCore Ring For Men (Silver)",
+                        "tagline": "Precision-crafted. Minimal yet powerful.",
+                        "price": 499,
+                        "image": "/images/products/titancore-ring.jpg",
+                        "link": "/product/titancore-ring-silver"
+                    },
+                    {
+                        "name": "Eternum Ceramic Ring For Men (Golden)",
+                        "tagline": "Forged with ceramic. Built to last forever.",
+                        "price": 699,
+                        "image": "/images/products/eternum-ring.jpg",
+                        "link": "/product/eternum-ceramic-ring-golden"
+                    }
+                ]
+            }
+        },
+        {
+            "id": "why-tanishtra",
+            "type": "trustFeatures",
+            "enabled": true,
+            "order": 9,
+            "settings": {
+                "features": [
+                    {
+                        "icon": "shield",
+                        "title": "Premium Finishing",
+                        "description": "Polished craftsmanship with long-lasting shine. Anti-tarnish coating on every piece."
+                    },
+                    {
+                        "icon": "gem",
+                        "title": "Bold Designs",
+                        "description": "Modern silhouettes inspired by power and presence. Stand out without trying."
+                    },
+                    {
+                        "icon": "truck",
+                        "title": "Pan-India Shipping",
+                        "description": "Fast dispatch. Secure packaging. COD available across India."
+                    }
+                ],
+                "columns": 3,
+                "backgroundColor": "#121216"
+            }
+        },
+        {
+            "id": "new-arrivals",
+            "type": "productShowcase",
+            "enabled": true,
+            "order": 10,
+            "settings": {
+                "eyebrow": "✦ JUST DROPPED",
+                "title": "Just Dropped",
+                "subtitle": "Fresh arrivals. Limited availability.",
+                "displayType": "overlay-cards",
+                "columns": 4,
+                "maxProducts": 4,
+                "filter": "new-arrival",
+                "showFilters": true,
+                "filterTabs": [
+                    "ALL",
+                    "CHAINS",
+                    "RINGS",
+                    "BRACELETS",
+                    "LOCKETS"
+                ],
+                "showStockIndicator": true,
+                "cardStyle": "overlay",
+                "ctaText": "SEE ALL NEW ARRIVALS",
+                "ctaLink": "/collections/new-arrivals"
+            }
+        },
+        {
+            "id": "instagram-feed",
+            "type": "instagramGrid",
+            "enabled": true,
+            "order": 11,
+            "settings": {
+                "eyebrow": "COMMUNITY",
+                "title": "#TanishtraMen",
+                "subtitle": "Real customers. Real style. Tag us to get featured.",
+                "handle": "@tanishtra",
+                "images": [],
+                "columns": 6,
+                "ctaText": "FOLLOW @TANISHTRA ON INSTAGRAM",
+                "ctaLink": "https://instagram.com/tanishtra"
+            }
+        },
+        {
+            "id": "newsletter",
+            "type": "newsletter",
+            "enabled": true,
+            "order": 12,
+            "settings": {
+                "eyebrow": "INNER CIRCLE",
+                "headline": "Get 10% Off Your First Order",
+                "subtitle": "Plus early access to new drops, exclusive offers, and style tips.",
+                "buttonText": "JOIN NOW",
+                "privacyText": "No spam. Unsubscribe anytime.",
+                "successMessage": "✓ Welcome to the Inner Circle! Check your inbox."
+            }
+        },
+        {
+            "id": "promo-banner",
+            "type": "promoBanner",
+            "enabled": false,
+            "order": 13,
+            "settings": {
+                "headline": "FLAT 40% OFF — SUMMER SALE",
+                "subtitle": "Use code SUMMER40 at checkout",
+                "backgroundImage": "",
+                "backgroundColor": "#C6A75E",
+                "textColor": "#0B0B0D",
+                "ctaText": "SHOP NOW",
+                "ctaLink": "/collections",
+                "expiryDate": ""
+            }
+        }
+    ]
+}
