@@ -10,9 +10,11 @@ import { CartDrawer } from "@/components/Ecommerce/CartDrawer";
 import { QuickViewModal } from "@/components/Ecommerce/QuickViewModal";
 
 import { WhatsAppWidget } from "@/components/ui/WhatsAppWidget";
+import { ExitIntentPopup } from "@/components/ui/ExitIntentPopup";
 import { BackToTop } from "@/components/ui/BackToTop";
 import { CookieConsent } from "@/components/ui/CookieConsent";
 import { OverlaySearch } from "@/components/ui/OverlaySearch";
+import { ScrollProgress } from "@/components/ui/ScrollProgress";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -50,6 +52,7 @@ export default function RootLayout({
       <body
         className={`${bebasNeue.variable} ${playfairDisplay.variable} ${inter.variable} ${montserrat.variable} antialiased font-inter bg-background text-text min-h-screen flex flex-col border-none outline-none overflow-x-hidden`}
       >
+        <ScrollProgress />
         <AnnouncementBar />
         <MainHeader />
         <MobileMenu />
@@ -62,7 +65,7 @@ export default function RootLayout({
         <MobileBottomNav />
         <CartDrawer />
         <QuickViewModal />
-
+        <ExitIntentPopup />
         <WhatsAppWidget />
         <BackToTop />
         <CookieConsent />

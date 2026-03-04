@@ -1,9 +1,16 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
+import { useCartStore } from '@/lib/store/useCartStore';
+
+const FREE_SHIPPING_THRESHOLD = 999;
 
 export function AnnouncementBar() {
     const [isVisible, setIsVisible] = useState(false);
+    const { items } = useCartStore();
+
+    // Calculate cart subtotal
+    const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
     useEffect(() => {
         const dismissed = localStorage.getItem('tanishtra-announcement-dismissed');
@@ -19,24 +26,43 @@ export function AnnouncementBar() {
 
     if (!isVisible) return null;
 
+    const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
+    const progress = Math.min((subtotal / FREE_SHIPPING_THRESHOLD) * 100, 100);
+    const isUnlocked = subtotal >= FREE_SHIPPING_THRESHOLD;
+
     return (
-        <div className="fixed top-0 left-0 right-0 h-[36px] bg-accent-gold z-[1200] flex items-center justify-center px-4">
-            <div className="w-full relative flex items-center justify-center overflow-hidden h-full">
-                {/* We use a mask on mobile to fade the edges for marquee */}
-                <div className="w-full max-w-[1320px] flex items-center justify-center relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] md:[mask-image:none]">
-                    <p className="font-montserrat text-[12px] uppercase tracking-[2px] text-background font-bold whitespace-nowrap animate-[marquee_15s_linear_infinite] md:animate-none">
-                        FREE SHIPPING ON ORDERS ABOVE ₹999 • COD AVAILABLE PAN-INDIA
-                    </p>
+        <div className={`fixed top-0 left-0 right-0 h-[36px] z-[1200] flex flex-col justify-center transition-colors duration-500 ${isUnlocked ? 'bg-[#4A7C59]' : 'bg-[#C6A75E]'}`}>
+            <div className="w-full relative flex items-center justify-center overflow-hidden h-full px-4">
+                {/* Dynamic Text Content */}
+                <div className="w-full max-w-[1320px] flex items-center justify-center relative overflow-hidden z-[2]">
+                    {subtotal === 0 ? (
+                        <p className="font-montserrat text-[11px] md:text-[12px] uppercase tracking-[2px] text-[#0B0B0D] font-bold text-center">
+                            FREE SHIPPING ON ORDERS ABOVE ₹999 • COD AVAILABLE PAN-INDIA
+                        </p>
+                    ) : isUnlocked ? (
+                        <p className="font-montserrat text-[11px] md:text-[12px] uppercase tracking-[2px] text-white font-bold text-center animate-[pulse_2s_ease-in-out_infinite]">
+                            🎉 YOU HAVE UNLOCKED FREE SHIPPING!
+                        </p>
+                    ) : (
+                        <p className="font-montserrat text-[11px] md:text-[12px] uppercase tracking-[1px] md:tracking-[2px] text-[#0B0B0D] font-bold text-center">
+                            YOU ARE <span className="font-bebas text-[14px] md:text-[16px] tracking-wider translate-y-[1px] inline-block">₹{remaining.toLocaleString('en-IN')}</span> AWAY FROM FREE SHIPPING!
+                        </p>
+                    )}
                 </div>
 
                 <button
                     onClick={handleDismiss}
-                    className="absolute right-0 md:bg-transparent bg-accent-gold pl-2 text-background hover:text-background-secondary transition-colors"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-[3] bg-transparent pl-2 text-background hover:opacity-70 transition-opacity"
                     aria-label="Dismiss announcement"
                 >
                     <X size={16} strokeWidth={3} />
                 </button>
             </div>
+
+            {/* Background Progress Bar (Subtle) */}
+            {subtotal > 0 && !isUnlocked && (
+                <div className="absolute top-0 left-0 bottom-0 bg-[rgba(255,255,255,0.3)] z-[1] transition-[width] duration-700 ease-out" style={{ width: `${progress}%` }} />
+            )}
         </div>
     );
 }

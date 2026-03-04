@@ -83,9 +83,29 @@ export default function AboutPage() {
                             <p>
                                 At Tanishtra, quality is non-negotiable. Every brass-based product undergoes a rigorous multi-layer plating process and is sealed with a premium anti-tarnish coating. This ensures that your armor retains its brilliant, polished finish, maintaining its commanding aura through sweat, wear, and time.
                             </p>
-                            <p>
-                                Based in the vibrant heart of Mumbai, but serving men across the nation, Tanishtra is more than a brand — it is a standard.
-                            </p>
+                        </div>
+
+                        {/* Founder Story Block */}
+                        <div className="mt-16 mb-16 p-8 md:p-10 border-l-4 border-[#C6A75E] bg-[#16161B] relative group">
+                            <div className="flex flex-col md:flex-row gap-8 items-center md:items-start">
+                                <div className="w-32 h-32 md:w-40 md:h-40 shrink-0 rounded-full overflow-hidden border-2 border-[#1F1F25] group-hover:border-[#C6A75E] transition-colors duration-500">
+                                    <img
+                                        src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
+                                        alt="Founder of Tanishtra"
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                                    />
+                                </div>
+                                <div className="flex flex-col">
+                                    <span className="text-[60px] leading-none text-[#C6A75E] font-playfair opacity-40 absolute top-4 left-6 md:left-48">"</span>
+                                    <p className="font-playfair text-[20px] md:text-[24px] text-[#F5F5F7] italic leading-relaxed mb-6 mt-4 relative z-10">
+                                        I started Tanishtra because I couldn't find jewelry that matched the ambition of the men in my circle. Everything was either cheap and flimsy, or overpriced and gaudy. We needed something built like armor—bold, relentless, and un-apologetic.
+                                    </p>
+                                    <div className="flex flex-col">
+                                        <span className="font-bebas text-[24px] tracking-wider text-[#C6A75E]">VEDANT & ARJUN</span>
+                                        <span className="font-montserrat text-[11px] uppercase tracking-[2px] text-[#A1A1AA] font-bold">Founders, Tanishtra</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         {/* In-content Gallery Grid */}

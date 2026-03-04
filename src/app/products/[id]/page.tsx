@@ -6,6 +6,7 @@ import { Heart, Minus, Plus, Shield, Truck, Lock, ChevronDown } from 'lucide-rea
 import { useCartStore } from '@/lib/store/useCartStore';
 import { useWishlistStore } from '@/lib/store/useWishlistStore';
 import { ProductCard, type Product } from '@/components/ui/ProductCard';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 export default function ProductDetailPage() {
     const { id } = useParams();
@@ -20,6 +21,22 @@ export default function ProductDetailPage() {
     const [isAdded, setIsAdded] = useState(false);
     const addToCart = useCartStore(state => state.addItem);
     const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
+
+    // Scroll tracking for sticky CTA
+    const [showStickyCTA, setShowStickyCTA] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            // Show sticky CTA when scrolled past 600px roughly on mobile
+            if (window.scrollY > 600 && window.innerWidth < 768) {
+                setShowStickyCTA(true);
+            } else {
+                setShowStickyCTA(false);
+            }
+        };
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     useEffect(() => {
         fetch('/api/products')
@@ -80,8 +97,39 @@ export default function ProductDetailPage() {
         }
     };
 
+    // JSON-LD Structured Data
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.name,
+        image: product.image,
+        description: product.description,
+        sku: product.id,
+        brand: {
+            '@type': 'Brand',
+            name: 'Tanishtra',
+        },
+        offers: {
+            '@type': 'Offer',
+            url: `https://tanishtra.com/products/${product.id}`,
+            priceCurrency: 'INR',
+            price: product.price,
+            itemCondition: 'https://schema.org/NewCondition',
+            availability: (product.stock || 0) > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+        },
+        aggregateRating: {
+            '@type': 'AggregateRating',
+            ratingValue: product.rating || 5,
+            reviewCount: product.reviews || 1,
+        },
+    };
+
     return (
         <div className="bg-background min-h-screen pt-[100px] md:pt-[140px] pb-24 border-none outline-none overflow-x-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
 
             {/* Breadcrumbs */}
             <div className="max-w-[1320px] mx-auto px-4 md:px-8 mb-8">
@@ -284,15 +332,31 @@ export default function ProductDetailPage() {
             )}
 
             {/* Mobile Sticky Add To Cart */}
-            <div className="md:hidden fixed bottom-[64px] left-0 right-0 p-3 bg-background/95 backdrop-blur-md border-t border-border z-[900]">
-                <button
-                    onClick={handleAddToCart}
-                    className={`w-full h-[50px] flex items-center justify-center font-montserrat text-[14px] uppercase tracking-[1px] font-bold rounded transition-all duration-300 ${isAdded ? 'bg-system-success text-white' : 'bg-accent-gold text-background'
-                        }`}
-                >
-                    {isAdded ? '✓ ADDED TO BAG' : `ADD TO BAG - ₹${product.price.toLocaleString('en-IN')}`}
-                </button>
-            </div>
+            <AnimatePresence>
+                {showStickyCTA && (
+                    <motion.div
+                        initial={{ y: 100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: 100, opacity: 0 }}
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                        className="md:hidden fixed bottom-[60px] left-0 right-0 p-3 bg-[#0B0B0D]/95 backdrop-blur-md border-t border-[#1F1F25] z-[900] shadow-[0_-10px_30px_rgba(0,0,0,0.5)]"
+                    >
+                        <div className="flex items-center justify-between gap-3 max-w-[500px] mx-auto">
+                            <div className="flex flex-col flex-1 pb-1">
+                                <span className="font-inter text-[13px] font-bold text-[#F5F5F7] line-clamp-1">{product.name}</span>
+                                <span className="font-montserrat text-[12px] text-[#C6A75E] font-bold tracking-[1px]">₹{product.price.toLocaleString('en-IN')}</span>
+                            </div>
+                            <button
+                                onClick={handleAddToCart}
+                                className={`h-[44px] px-6 flex items-center justify-center font-montserrat text-[12px] uppercase tracking-[1px] font-bold rounded-[4px] transition-all duration-300 whitespace-nowrap ${isAdded ? 'bg-[#4A7C59] text-white' : 'bg-[#C6A75E] text-[#0B0B0D]'
+                                    }`}
+                            >
+                                {isAdded ? '✓ ADDED' : 'ADD TO BAG'}
+                            </button>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
         </div>
     );
