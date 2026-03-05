@@ -6,9 +6,10 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 interface RecentlyViewedProps {
     currentProductId?: string;
+    title?: string;
 }
 
-export function RecentlyViewed({ currentProductId }: RecentlyViewedProps) {
+export function RecentlyViewed({ currentProductId, title = "Recently Viewed" }: RecentlyViewedProps) {
     const { items } = useRecentlyViewed();
     const [mounted, setMounted] = useState(false);
 
@@ -39,7 +40,7 @@ export function RecentlyViewed({ currentProductId }: RecentlyViewedProps) {
                     className="mb-8"
                 >
                     <h2 className="font-inter text-[20px] font-bold text-[#F5F5F7]">
-                        Recently Viewed
+                        {title}
                     </h2>
                 </div>
 

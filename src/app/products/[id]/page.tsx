@@ -7,7 +7,11 @@ import { useCartStore } from '@/lib/store/useCartStore';
 import { useWishlistStore } from '@/lib/store/useWishlistStore';
 import { ProductCard, type Product } from '@/components/ui/ProductCard';
 import { ProductGallery } from '@/components/product/ProductGallery';
-import { RecentlyViewed } from '@/components/Ecommerce/RecentlyViewed';
+import { RecentlyViewed } from '@/components/Ecommerce/Recommendations/RecentlyViewed';
+import { YouMayAlsoLike } from '@/components/Ecommerce/Recommendations/YouMayAlsoLike';
+import { CompleteTheLook } from '@/components/Ecommerce/Recommendations/CompleteTheLook';
+import { CustomersAlsoBought } from '@/components/Ecommerce/Recommendations/CustomersAlsoBought';
+import { useRecentlyViewed } from '@/lib/store/useRecentlyViewed';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 export default function ProductDetailPage() {
@@ -22,6 +26,7 @@ export default function ProductDetailPage() {
     const [isAdded, setIsAdded] = useState(false);
     const addToCart = useCartStore(state => state.addItem);
     const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
+    const addViewedProduct = useRecentlyViewed(state => state.addViewedProduct);
 
     // Trust Elements State
     const [reviewsData, setReviewsData] = useState<any[]>([]);
@@ -61,10 +66,16 @@ export default function ProductDetailPage() {
                     }
                     setRelated(rel.slice(0, 4));
 
-                    // Track recently viewed
-                    const saved = JSON.parse(localStorage.getItem('tanishtra-recently-viewed') || '[]');
-                    const newSaved = [found.id, ...saved.filter((productId: string) => productId !== found.id)].slice(0, 10);
-                    localStorage.setItem('tanishtra-recently-viewed', JSON.stringify(newSaved));
+                    // Track recently viewed using Zustand
+                    addViewedProduct({
+                        id: found.id,
+                        name: found.name,
+                        price: found.price,
+                        originalPrice: found.originalPrice,
+                        image: found.image,
+                        category: found.category,
+                        slug: `/products/${found.id}`
+                    });
                 }
                 setIsLoading(false);
             })
@@ -397,7 +408,19 @@ export default function ProductDetailPage() {
 
                     </div>
                 </div>
+            </div> {/* Close Main PDP Layout max-w container */}
 
+            {/* 4C: Complete The Look */}
+            {product && <CompleteTheLook currentProductId={product.id} currentCategory={product.category} />}
+
+            {/* 4A: Recently Viewed */}
+            {product && <RecentlyViewed currentProductId={product.id} />}
+
+            {/* 4B: You May Also Like */}
+            {product && <YouMayAlsoLike currentProductId={product.id} currentCategory={product.category} />}
+
+            {/* Re-open max-w container for Reviews */}
+            <div className="max-w-[1320px] mx-auto px-4 md:px-8 mb-20 md:mb-32">
                 {/* 2C/2D/2E: Reviews Section */}
                 <div id="reviews-section" className="mt-16 md:mt-24 border-t border-border pt-16">
                     <h2 className="font-montserrat text-[14px] uppercase text-accent-gold tracking-[2px] mb-6">Customer Reviews</h2>
@@ -595,24 +618,8 @@ export default function ProductDetailPage() {
 
             </div>
 
-            {/* Suggested Products */}
-            {related.length > 0 && (
-                <section className="bg-background-secondary border-t border-border py-20 px-4 md:px-8">
-                    <div className="max-w-[1320px] mx-auto">
-                        <h2 className="font-playfair text-[32px] md:text-[42px] text-text mb-10 text-center">
-                            You May Also Like
-                        </h2>
-                        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-                            {related.map(p => (
-                                <ProductCard key={p.id} product={p} variant="bestseller" />
-                            ))}
-                        </div>
-                    </div>
-                </section>
-            )}
-
-            {/* Recently Viewed */}
-            <RecentlyViewed currentProductId={product.id} />
+            {/* 4D: Customers Also Bought */}
+            {product && <CustomersAlsoBought currentProductId={product.id} />}
 
             {/* Mobile Sticky Add To Cart */}
             <AnimatePresence>

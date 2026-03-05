@@ -366,6 +366,25 @@
                 "ctaLink": "/collections",
                 "expiryDate": ""
             }
+        },
+        {
+            "id": "trending-now",
+            "type": "trendingNow",
+            "enabled": false,
+            "order": 15,
+            "settings": {
+                "title": "Trending Now",
+                "subtitle": "What everyone's adding to their bag"
+            }
+        },
+        {
+            "id": "recently-viewed-home",
+            "type": "recentlyViewed",
+            "enabled": false,
+            "order": 16,
+            "settings": {
+                "title": "Continue Browsing"
+            }
         }
     ]
 }

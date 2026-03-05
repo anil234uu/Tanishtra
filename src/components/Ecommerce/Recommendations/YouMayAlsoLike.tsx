@@ -15,7 +15,7 @@ export function YouMayAlsoLike({ currentProductId, currentCategory }: YouMayAlso
 
     useEffect(() => {
         // Find products in same category, exclude current
-        const productsMatches = (productsDataRaw.products as Product[])
+        const productsMatches = (productsDataRaw as Product[])
             .filter(p => p.category.toUpperCase() === currentCategory.toUpperCase() && p.id !== currentProductId);
 
         // Shuffle and pick 4

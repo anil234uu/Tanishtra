@@ -18,7 +18,7 @@ export function CompleteTheLook({ currentProductId, currentCategory }: CompleteT
 
     useEffect(() => {
         // Find 3 products from DIFFERENT categories
-        const allProducts = productsDataRaw.products as Product[];
+        const allProducts = productsDataRaw as Product[];
         const otherCategories = Array.from(new Set(allProducts.map(p => p.category))).filter(c => c.toUpperCase() !== currentCategory.toUpperCase());
 
         const selectedBundle: Product[] = [];

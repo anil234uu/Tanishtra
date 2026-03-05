@@ -13,7 +13,7 @@ export function CustomersAlsoBought({ currentProductId }: CustomersAlsoBoughtPro
 
     useEffect(() => {
         // Find bestsellers, exclude current
-        const productsMatches = (productsDataRaw.products as Product[])
+        const productsMatches = (productsDataRaw as Product[])
             .filter(p => p.isBestseller && p.id !== currentProductId);
 
         // Shuffle and pick 6 to allow scrolling

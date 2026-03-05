@@ -1,30 +1,17 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Minus, Plus, Trash2, Truck, ShieldCheck, RefreshCcw, CreditCard, Sparkles } from 'lucide-react';
+import { X, Minus, Plus, Trash2, Truck, ShieldCheck, RefreshCcw, CreditCard, Sparkles, Clock } from 'lucide-react';
 import { useCartStore } from '@/lib/store/useCartStore';
+import { useRecentlyViewed } from '@/lib/store/useRecentlyViewed';
 
 const FREE_SHIPPING_THRESHOLD = 999;
 
 export function CartDrawer() {
     const { items, isOpen, closeCart, updateQuantity, removeItem, addItem } = useCartStore();
     const [cartNote, setCartNote] = useState('');
-    const [crossSells, setCrossSells] = useState<any[]>([]);
-
-    useEffect(() => {
-        if (isOpen && items.length > 0) {
-            // Fetch cross-sells based on cart contents
-            fetch('/api/products')
-                .then(res => res.json())
-                .then(data => {
-                    const cartIds = items.map(i => i.id);
-                    // Find products not in cart, preferably bestsellers
-                    const recs = data.filter((p: any) => !cartIds.includes(p.id) && p.isBestseller).slice(0, 2);
-                    setCrossSells(recs);
-                })
-                .catch(console.error);
-        }
-    }, [isOpen, items]);
+    const { items: recentlyViewedItems } = useRecentlyViewed();
+    const recentNotInCart = recentlyViewedItems.filter(rv => !items.find(cartItem => cartItem.id === rv.id));
 
     const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
     const remaining = FREE_SHIPPING_THRESHOLD - subtotal;
@@ -135,28 +122,27 @@ export function CartDrawer() {
                                 </div>
                             )}
 
-                            {/* Completing the Look (Cross Sells) */}
-                            {crossSells.length > 0 && (
+                            {/* Recently Viewed (Cart Upsell) */}
+                            {items.length > 0 && recentNotInCart.length > 0 && (
                                 <div className="mt-2 pt-6 border-t border-[#1F1F25]">
                                     <div className="flex items-center gap-2 mb-4">
-                                        <Sparkles size={16} className="text-[#C6A75E]" />
-                                        <h3 className="font-montserrat text-[12px] uppercase tracking-[2px] font-bold text-[#F5F5F7]">Complete The Look</h3>
+                                        <Clock size={16} className="text-[#C6A75E]" />
+                                        <h3 className="font-montserrat text-[12px] uppercase tracking-[2px] font-bold text-[#F5F5F7]">Recently Viewed</h3>
                                     </div>
-                                    <div className="flex flex-col gap-3">
-                                        {crossSells.map(product => (
-                                            <div key={product.id} className="flex gap-4 p-3 border border-[#2A2A2F] bg-[#0B0B0D] rounded-md items-center">
-                                                <img src={product.image} alt={product.name} className="w-16 h-16 object-cover rounded-sm" />
+                                    <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+                                        {recentNotInCart.map(product => (
+                                            <div key={product.id} className="snap-start shrink-0 w-[140px] flex flex-col gap-2 p-2 border border-[#2A2A2F] bg-[#0B0B0D] rounded-md">
+                                                <img src={product.image} alt={product.name} className="w-full aspect-square object-cover rounded-sm" />
                                                 <div className="flex flex-col flex-1">
-                                                    <span className="font-inter text-sm font-bold text-[#F5F5F7] line-clamp-1">{product.name}</span>
-                                                    <span className="font-montserrat text-[#C6A75E] font-bold text-[13px]">₹{product.price.toLocaleString('en-IN')}</span>
+                                                    <span className="font-inter text-[12px] font-bold text-[#F5F5F7] line-clamp-1">{product.name}</span>
+                                                    <span className="font-montserrat text-[#C6A75E] font-bold text-[12px] mb-2">₹{product.price.toLocaleString('en-IN')}</span>
+                                                    <button
+                                                        onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1, size: undefined })}
+                                                        className="w-full h-7 rounded border border-[#C6A75E] flex items-center justify-center hover:bg-[#C6A75E] hover:text-[#0B0B0D] transition-colors text-[#C6A75E] font-montserrat text-[10px] uppercase font-bold"
+                                                    >
+                                                        Add
+                                                    </button>
                                                 </div>
-                                                <button
-                                                    onClick={() => addItem({ id: product.id, name: product.name, price: product.price, image: product.image, quantity: 1, size: undefined })}
-                                                    className="w-8 h-8 rounded-full bg-[#16161B] border border-[#2A2A2F] flex items-center justify-center hover:border-[#C6A75E] hover:text-[#C6A75E] transition-colors text-[#F5F5F7]"
-                                                    aria-label="Add recommendation to cart"
-                                                >
-                                                    <Plus size={16} />
-                                                </button>
                                             </div>
                                         ))}
                                     </div>

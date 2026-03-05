@@ -19,6 +19,8 @@ const sectionComponents: Record<string, any> = {
     'videoSection': dynamic(() => import('./VideoSection')),
     'customHtml': dynamic(() => import('./CustomHtmlSection')),
     'lifestyleGallery': dynamic(() => import('./LifestyleGallerySection')),
+    'recentlyViewed': dynamic(() => import('./RecentlyViewedSection')),
+    'trendingNow': dynamic(() => import('./TrendingNowSection')),
 };
 
 export default sectionComponents;
