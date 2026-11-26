@@ -35,3 +35,18 @@ jobs:
         with:
           name: TANISHTRA-APK
           path: TANISHTRA-debug.apk
+
+  portal-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test dependency
+        run: npm install --prefix "$RUNNER_TEMP/portal-test" playwright-core@1.51.1
+      - name: Verify mobile portal motion and keyboard deck
+        run: |
+          export NODE_PATH="$RUNNER_TEMP/portal-test/node_modules"
+          export CHROME_PATH="$(command -v google-chrome || command -v chromium)"
+          node android/portal-test.cjs
