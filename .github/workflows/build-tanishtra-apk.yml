@@ -14,13 +14,18 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Use runner Android SDK
+      - name: Locate Android SDK and required packages
+        shell: bash
         run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          sdkmanager --list_installed
-          if [ ! -d "$ANDROID_HOME/platforms/android-35" ] || [ ! -d "$ANDROID_HOME/build-tools/35.0.0" ]; then
-            sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+          SDK="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          echo "ANDROID_HOME=$SDK" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$SDK" >> "$GITHUB_ENV"
+          if [ ! -f "$SDK/platforms/android-35/android.jar" ] || [ ! -d "$SDK/build-tools/35.0.0" ]; then
+            MANAGER="$(find "$SDK/cmdline-tools" -type f -name sdkmanager | sort -V | tail -n 1)"
+            test -n "$MANAGER"
+            "$MANAGER" --sdk_root="$SDK" 'platforms;android-35' 'build-tools;35.0.0'
           fi
+          test -f "$SDK/platforms/android-35/android.jar"
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.9'
