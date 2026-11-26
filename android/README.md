@@ -1,2 +1,2 @@
-# TANISHTRA Android
-Live WebView storefront for https://tanishtra.in/. Requires internet. Android 6+. Checkout, external UPI redirects and account login require real-device testing. Debug APK is for testing only. No Shopify admin credentials included. Build with Gradle 8.9 and Java 17 or use GitHub Actions.
+# TANISHTRA Android 1.1.0
+The bundled portal home uses the requested dark palette, live Shopify product photography, reversible scroll-driven panels/title and touch/keyboard product deck. Its local HTML is served only at the dedicated same-origin app URL. All shopping, cart, checkout, search, account and original storefront links use the live website. Product deck and category counts are fetched from public Shopify collection JSON; fallback shows a verified featured product and working shop links. Fonts require internet and fall back to system sans. The existing website main branch is unchanged. Real-device checkout and accessibility testing still required.

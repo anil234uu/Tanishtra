@@ -14,7 +14,7 @@ import android.webkit.*;
 import android.widget.*;
 
 public class MainActivity extends Activity {
-    private static final String HOME = "https://tanishtra.in/";
+    private static final String HOME = "https://tanishtra.in/__tanishtra_app__/index.html";
     private WebView web;
     private ProgressBar progress;
     private LinearLayout error;
@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
         super.onCreate(state);
         LinearLayout root = new LinearLayout(this);
         root.setOrientation(LinearLayout.VERTICAL);
-        root.setBackgroundColor(Color.WHITE);
+        root.setBackgroundColor(Color.parseColor("#0A0C0E"));
         root.setOnApplyWindowInsetsListener((v, insets) -> {
             if (android.os.Build.VERSION.SDK_INT >= 30) {
                 android.graphics.Insets bars = insets.getInsets(WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout() | WindowInsets.Type.ime());
@@ -46,10 +46,11 @@ public class MainActivity extends Activity {
         error.setOrientation(LinearLayout.VERTICAL);
         error.setGravity(android.view.Gravity.CENTER);
         error.setPadding(dp(24),dp(24),dp(24),dp(24));
-        error.setBackgroundColor(Color.WHITE);
+        error.setBackgroundColor(Color.parseColor("#101317"));
         TextView msg = new TextView(this);
         msg.setText("Unable to connect to TANISHTRA.\nPlease check your internet connection.");
         msg.setGravity(android.view.Gravity.CENTER);
+        msg.setTextColor(Color.parseColor("#EDE7DC"));
         error.addView(msg);
         Button retry = new Button(this);
         retry.setText("Try again");
@@ -76,6 +77,13 @@ public class MainActivity extends Activity {
         CookieManager.getInstance().setAcceptCookie(true);
         CookieManager.getInstance().setAcceptThirdPartyCookies(view, true);
         view.setWebViewClient(new WebViewClient() {
+            @Override public WebResourceResponse shouldInterceptRequest(WebView v, WebResourceRequest r) {
+                if ("GET".equals(r.getMethod()) && HOME.equals(r.getUrl().toString())) {
+                    try { return new WebResourceResponse("text/html", "UTF-8", getAssets().open("portal.html")); }
+                    catch (java.io.IOException e) { return new WebResourceResponse("text/plain","UTF-8",new java.io.ByteArrayInputStream("App home unavailable".getBytes(java.nio.charset.StandardCharsets.UTF_8))); }
+                }
+                return super.shouldInterceptRequest(v,r);
+            }
             @Override public boolean shouldOverrideUrlLoading(WebView v, WebResourceRequest r) {
                 return r.isForMainFrame() && navigate(r.getUrl());
             }
