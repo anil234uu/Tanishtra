@@ -1,0 +1,2 @@
+# TANISHTRA Android
+Live WebView storefront for https://tanishtra.in/. Requires internet. Android 6+. Checkout, external UPI redirects and account login require real-device testing. Debug APK is for testing only. No Shopify admin credentials included. Build with Gradle 8.9 and Java 17 or use GitHub Actions.
