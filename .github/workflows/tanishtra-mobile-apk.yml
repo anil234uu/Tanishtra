@@ -23,15 +23,12 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - name: Verify preinstalled Android SDK and required platform
-        shell: bash
-        run: |
-          echo "Android SDK: $ANDROID_HOME"
-          test -d "$ANDROID_HOME"
-          sdkmanager --version
-          if [ ! -d "$ANDROID_HOME/platforms/android-35" ] || [ ! -d "$ANDROID_HOME/build-tools/35.0.0" ]; then
-            sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
-          fi
+      - name: Set up Android SDK command-line tools
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools platforms;android-35 build-tools;35.0.0'
+          log-accepted-android-sdk-licenses: 'false'
+      - run: sdkmanager --version
       - run: npm install
       - run: npm run build
       - run: npx cap add android
