@@ -1,0 +1,5 @@
+# TANISHTRA — Android storefront concept
+Mobile-first React/TypeScript/Vite/Tailwind/Lucide carousel wrapped in Capacitor 7. Remote public product images require internet; layered CSS motion is not true 3D.
+Run locally: Node 22, npm install, npm run dev. Android: npm run build, npx cap add android, npx cap sync android, then assembleDebug with JDK 21 and Android SDK 35.
+GitHub Actions: Build Tanishtra Mobile APK runs on mobile-carousel-android pushes. Download Tanishtra-Android-APK artifact after a successful run; extract Tanishtra-debug.apk. Debug APK only for testing, not Play Store release.
+Shopify product, cart, search and checkout open official storefront; wishlist is local. No admin credentials included. Original live theme and main branch remain unchanged. Build and device behavior not verified until CI/test.
