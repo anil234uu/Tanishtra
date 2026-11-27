@@ -1,0 +1,8 @@
+export const STORE='https://tanishtra.in';
+export const PRODUCTS=[
+ {name:'Cuban Chain For Men',category:'Chains',word:'BOLD',label:'THE SIGNATURE EDIT',description:'A statement in every link.',bg:'#191a1c',panel:'#393b3d',src:'https://tanishtra.in/cdn/shop/files/I_2025-07-22_07_17_21_0000.jpg?v=1774960642&width=1080',path:'/products/cuban-chain-for-men'},
+ {name:'Golden Crescent Hoop Earrings',category:'Earrings',word:'GLOW',label:'THE GOLD EDIT',description:'Timeless curves. Effortless elegance.',bg:'#3b2918',panel:'#806039',src:'https://tanishtra.in/cdn/shop/files/I_2026-04-02_104927_0000.png?v=1778149723&width=1080',path:'/products/golden-crescent-hoop-earrings'},
+ {name:'Papillon Layered Butterfly Necklace',category:'Necklaces',word:'GRACE',label:'THE ROMANCE EDIT',description:'A little magic in every detail.',bg:'#503139',panel:'#92616c',src:'https://tanishtra.in/cdn/shop/files/papillon-layered-necklace-flat-lay.png?v=1788257788&width=1024',path:'/products/papillon-layered-butterfly-necklace'},
+ {name:'Golden Knot Bracelet',category:'Bracelets',word:'ICON',label:'THE MODERN HEIRLOOM',description:'An unforgettable finishing touch.',bg:'#172e29',panel:'#43645a',src:'https://tanishtra.in/cdn/shop/files/I_2026-04-02_114834_0000.png?v=1778238273&width=1080',path:'/products/golden-knot-bracelet'}
+];
+export const COLLECTIONS=[{name:'Earrings',path:'/collections/earring',index:1},{name:'Necklaces',path:'/collections/necklaces',index:2},{name:'Bracelets',path:'/collections/bracelet-1',index:3},{name:'For Him',path:'/collections/men-1',index:0}];
