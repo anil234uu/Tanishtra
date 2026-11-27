@@ -10,7 +10,7 @@ permissions:
   contents: read
 jobs:
   apk:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: tanishtra-mobile
@@ -23,8 +23,15 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-      - uses: android-actions/setup-android@v3
-      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Verify preinstalled Android SDK and required platform
+        shell: bash
+        run: |
+          echo "Android SDK: $ANDROID_HOME"
+          test -d "$ANDROID_HOME"
+          sdkmanager --version
+          if [ ! -d "$ANDROID_HOME/platforms/android-35" ] || [ ! -d "$ANDROID_HOME/build-tools/35.0.0" ]; then
+            sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+          fi
       - run: npm install
       - run: npm run build
       - run: npx cap add android
